@@ -1,0 +1,14 @@
+# docker-compose.yml
+services:
+  rpi-image-gen:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rpi-image-gen-tool:local
+    container_name: rpi-image-gen
+    privileged: true
+    volumes:
+      - work-data:/workspace/work:rw
+
+volumes:
+  work-data:
