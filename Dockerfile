@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM debian:trixie-slim
+ARG DEBIAN_VERSION=trixie
+
+FROM debian:${DEBIAN_VERSION}-slim
 
 
 RUN apt-get update && apt-get -q -y --no-install-recommends install \
@@ -14,7 +16,9 @@ RUN apt-get update && apt-get -q -y --no-install-recommends install \
     
 WORKDIR /opt
 
-RUN git clone --depth 1 https://github.com/raspberrypi/rpi-image-gen.git . \
+ARG RPI_IMAGE_GEN_VERSION=master
+
+RUN git clone --depth 1 --branch ${RPI_IMAGE_GEN_VERSION} https://github.com/raspberrypi/rpi-image-gen.git . \
     && apt-get update && ./install_deps.sh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -23,3 +27,4 @@ RUN git clone --depth 1 https://github.com/raspberrypi/rpi-image-gen.git . \
 WORKDIR /workspace
 
 ENTRYPOINT [ "/opt/rpi-image-gen" ]
+CMD [ "--help"]

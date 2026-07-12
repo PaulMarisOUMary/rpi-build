@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        DEBIAN_VERSION: "trixie"
+        RPI_IMAGE_GEN_VERSION: "master"
     image: rpi-image-gen-tool:local
     container_name: rpi-image-gen
     privileged: true
