@@ -1,0 +1,15 @@
+# METABEGIN
+# X-Env-Layer-Name: example-slim-customisation
+# X-Env-Layer-Version: 2.0.0
+# X-Env-Layer-Category: example
+# X-Env-Layer-Desc: Example layer with dependency plus some customisation
+#  hooks.
+# X-Env-Layer-Requires: v8-svelte
+# METAEND
+---
+#mmdebstrap:
+#  packages:
+#   - pkg1
+#   - pkg2
+#  customize-hooks:
+#    - chroot $1 sh -c "echo run cmd in chroot"
