@@ -5,7 +5,7 @@ Raspberry Pi Models: Hardware & Firmware Mapping
 * `Compute Module Documentation <https://www.raspberrypi.com/documentation/computers/compute-module.html#models>`_
 * `CPU Tree Values <https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#check-raspberry-pi-model-and-cpu-across-distributions>`_
 
----
+-------
 
 Raspberry Pi Models Matrix
 ==========================
@@ -126,7 +126,7 @@ Raspberry Pi Models Matrix
         * 8 GB
         * 16 GB
 
----
+-------
 
 Useful Commands
 ===============
@@ -144,7 +144,6 @@ Hardware Detection
     # Detailed layout of the board components and buses
     sudo apt install lshw -y
     lshw
-    ls -l /boot/firmware
 
 Firmware Inspection
 -------------------
@@ -153,6 +152,10 @@ Firmware Inspection
 
     # See installed files installed by the Broadcom WiFi firmware package
     dpkg -L firmware-brcm80211
+
+    # Find which packages own the Broadcom & Cypress firmware files
+    dpkg -S /lib/firmware/brcm/*
+    dpkg -S /lib/firmware/cypress/*
 
     # Download packages locally to inspect them without installing
     apt-get download raspi-firmware
