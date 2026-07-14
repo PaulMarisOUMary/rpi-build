@@ -23,10 +23,10 @@ Raspberry Pi Models Matrix
       - Firmware ``bluez``
       - Memory
     * - Raspberry Pi 3 Model B
-      - * revision 1.1: `BCM2837 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2837>`_
-        * revision 1.2: `BCM2837B0 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2837b0>`_
-      - * revision 1.1: 4x Cortex-A53 @ 1.2 GHz 64bit
-        * revision 1.2: 4x Cortex-A53 @ 1.2 GHz 64bit
+      - | revision 1.1: `BCM2837 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2837>`_
+        | revision 1.2: `BCM2837B0 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2837b0>`_
+      - | revision 1.1: 4x Cortex-A53 @ 1.2 GHz 64bit
+        | revision 1.2: 4x Cortex-A53 @ 1.2 GHz 64bit
       - BCM43438
       - bcm2710
       - brcmfmac43430
@@ -71,37 +71,37 @@ Raspberry Pi Models Matrix
       - bcm2711
       - brcmfmac43455
       - BCM4345C0
-      - * 1 GB
-        * 2 GB
-        * 3 GB
-        * 4 GB
-        * 8 GB
+      - | 1 GB
+        | 2 GB
+        | 3 GB
+        | 4 GB
+        | 8 GB
     * - Compute Module 4
       - `BCM2711 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2711>`_
       - 4x Cortex-A72 @ 1.5 GHz 64bit
       - Optional CYW43455
       - bcm2711
-      - * brcmfmac43455
-        * brcmfmac43456
-      - * BCM4345C0
-        * BCM4345C5
-      - * 1 GB
-        * 2 GB
-        * 4 GB
-        * 8 GB
+      - | brcmfmac43455
+        | brcmfmac43456
+      - | BCM4345C0
+        | BCM4345C5
+      - | 1 GB
+        | 2 GB
+        | 4 GB
+        | 8 GB
     * - Compute Module 4S
       - `BCM2711 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2711>`_
       - 4x Cortex-A72 @ 1.5 GHz 64bit
       - Optional CYW43455
       - bcm2711
-      - * brcmfmac43455
-        * brcmfmac43456
-      - * BCM4345C0
-        * BCM4345C5
-      - * 1 GB
-        * 2 GB
-        * 4 GB
-        * 8 GB
+      - | brcmfmac43455
+        | brcmfmac43456
+      - | BCM4345C0
+        | BCM4345C5
+      - | 1 GB
+        | 2 GB
+        | 4 GB
+        | 8 GB
     * - Raspberry Pi 5
       - `BCM2712 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2712>`_
       - 4x Cortex-A76 @ 2.4 GHz 64bit
@@ -109,11 +109,11 @@ Raspberry Pi Models Matrix
       - bcm2712
       - brcmfmac43455
       - BCM4345C0
-      - * 1 GB
-        * 2 GB
-        * 4 GB
-        * 8 GB
-        * 16 GB
+      - | 1 GB
+        | 2 GB
+        | 4 GB
+        | 8 GB
+        | 16 GB
     * - Compute Module 5
       - `BCM2712 <https://www.raspberrypi.com/documentation/computers/processors.html#bcm2712>`_
       - 4x Cortex-A76 @ 2.4 GHz 64bit
@@ -121,10 +121,10 @@ Raspberry Pi Models Matrix
       - bcm2712
       - brcmfmac43455
       - BCM4345C0
-      - * 2 GB
-        * 4 GB
-        * 8 GB
-        * 16 GB
+      - | 2 GB
+        | 4 GB
+        | 8 GB
+        | 16 GB
 
 -------
 
