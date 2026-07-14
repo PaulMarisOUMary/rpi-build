@@ -1,9 +1,8 @@
 # METABEGIN
 # X-Env-Layer-Name: example-mydevice
 # X-Env-Layer-Category: example
-# X-Env-Layer-Desc: Example device layer that performs some fine tuning using
-#  dpkg to trim files so we boot a v8 kernel on pi5 / cm5 only. Declares the
-#  asset dir so that overlays and hooks will be found.
+# X-Env-Layer-Desc: Example device layer that performs some fine tuning using dpkg to trim files so we boot a v8 kernel on pi3 / cm3 only.
+#  Declares the asset dir so that overlays and hooks will be found.
 # X-Env-Layer-Version: 1.0.0
 # X-Env-Layer-Requires: device-base
 # X-Env-Layer-Provides: device,rpi-device
@@ -28,17 +27,20 @@ mmdebstrap:
   dpkgopts:
     - path-exclude=/usr/lib/raspi-firmware/*
     - path-include=/usr/lib/raspi-firmware/LICENCE.broadcom
-    - path-exclude=/usr/lib/linux-image-*-v8/broadcom/bcm2710*
     - path-exclude=/usr/lib/linux-image-*-v8/broadcom/bcm2711*
-    - path-exclude=/usr/lib/linux-image-*-v8/broadcom/bcm2837*
+    - path-exclude=/usr/lib/linux-image-*-v8/broadcom/bcm2712*
     - path-exclude=/usr/share/doc/firmware-brcm80211/
     - path-include=/usr/share/doc/firmware-brcm80211/copyright
     - path-exclude=/lib/firmware/cypress/*
+    - path-include=/lib/firmware/cypress/cyfmac43430*
     - path-include=/lib/firmware/cypress/cyfmac43455*
     - path-exclude=/lib/firmware/brcm/*
-    - path-include=/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,5*
+    - path-include=/lib/firmware/brcm/brcmfmac43430-sdio.raspberrypi,3*
+    - path-include=/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3*
+    - path-include=/lib/firmware/brcm/brcmfmac43430-sdio.txt
     - path-include=/lib/firmware/brcm/brcmfmac43455-sdio.txt
-    - path-include=/lib/firmware/brcm/BCM4345C0.raspberrypi,5*
+    - path-include=/lib/firmware/brcm/BCM43430A1.raspberrypi,3*
+    - path-include=/lib/firmware/brcm/BCM4345C0.raspberrypi,3*
   customize-hooks:
     - mkdir -p $1/boot/firmware
     - ln -sf firmware/overlays $1/boot/overlays
