@@ -4,13 +4,13 @@
 # X-Env-Layer-Desc: Example device layer that performs some fine tuning using
 #  dpkg to trim files so we boot a v8 kernel on pi5 / cm5 only. Declares the
 #  asset dir so that overlays and hooks will be found.
-# X-Env-Layer-Version: 2.0.1
+# X-Env-Layer-Version: 1.0.0
 # X-Env-Layer-Requires: device-base
 # X-Env-Layer-Provides: device,rpi-device
 #
 # X-Env-VarPrefix: device
 #
-# X-Env-Var-class: pi5
+# X-Env-Var-class: pi3
 #
 # X-Env-Var-assetdir: ${DIRECTORY}
 # X-Env-Var-assetdir-Desc: Directory for device assets
