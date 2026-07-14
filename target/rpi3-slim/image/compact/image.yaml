@@ -1,7 +1,8 @@
 # METABEGIN
-# X-Env-Layer-Name: example-myimage
+# X-Env-Layer-Name: rpi3-slim-image
 # X-Env-Layer-Category: image
-# X-Env-Layer-Desc: Example image layer. This declares the asset dir so that
+# X-Env-Layer-Desc: Compact MBR image layout (vfat boot + ext4 root, with
+#  Android-sparse variants) for rpi3-slim. Declares the asset dir so that
 #  hooks in there will be run.
 # X-Env-Layer-Version: 1.0.1
 # X-Env-Layer-Requires: image-base

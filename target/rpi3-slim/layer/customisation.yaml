@@ -1,0 +1,15 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-customisation
+# X-Env-Layer-Version: 1.0.0
+# X-Env-Layer-Category: suite
+# X-Env-Layer-Desc: Project-specific packages and customisation hooks for
+#  rpi3-slim. Add application packages / hooks here.
+# X-Env-Layer-Requires: rpi3-slim-base
+# METAEND
+---
+#mmdebstrap:
+#  packages:
+#   - pkg1
+#   - pkg2
+#  customize-hooks:
+#    - chroot $1 sh -c "echo run cmd in chroot"

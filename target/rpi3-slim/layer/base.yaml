@@ -1,0 +1,13 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-base
+# X-Env-Layer-Version: 1.0.0
+# X-Env-Layer-Category: suite
+# X-Env-Layer-Desc: Minimal Debian Trixie userland for the rpi3-slim target:
+#  apt, core utils, wired networking, SSH access, and WiFi (iwd). Remove
+#  openssh-server / iwd below for an even smaller headless-serial-only image.
+# X-Env-Layer-Requires: debian-trixie-arm64-slim,
+#  rpi-debian-trixie,
+#  rpi-misc-skel,
+#  systemd-net-min,
+#  systemd-timesyncd,
+# METAEND

@@ -1,8 +1,8 @@
 device:
-  layer: example-mydevice
+  layer: rpi3-slim-device
 
 image:
-  layer: example-myimage
+  layer: rpi3-slim-image
 
 layer:
-  everything: example-slim-customisation
+  customisation: rpi3-slim-customisation

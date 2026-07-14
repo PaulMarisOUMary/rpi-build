@@ -1,8 +1,10 @@
 # METABEGIN
-# X-Env-Layer-Name: example-mydevice
-# X-Env-Layer-Category: example
-# X-Env-Layer-Desc: Example device layer that performs some fine tuning using dpkg to trim files so we boot a v8 kernel on pi3 / cm3 only.
-#  Declares the asset dir so that overlays and hooks will be found.
+# X-Env-Layer-Name: rpi3-slim-device
+# X-Env-Layer-Category: device
+# X-Env-Layer-Desc: Device layer for Raspberry Pi 3 Model B / B+ / A+ and
+#  Compute Module 3 / 3+ (BCM2837 / BCM2837B0 family). Trims kernel DTBs and
+#  WiFi/Bluetooth firmware to this board family only. Declares the asset dir
+#  so that overlays and hooks are found.
 # X-Env-Layer-Version: 1.0.0
 # X-Env-Layer-Requires: device-base
 # X-Env-Layer-Provides: device,rpi-device
@@ -16,7 +18,6 @@
 # X-Env-Var-assetdir-Required: n
 # X-Env-Var-assetdir-Valid: dir
 # X-Env-Var-assetdir-Set: y
-
 # METAEND
 ---
 mmdebstrap:
@@ -36,8 +37,8 @@ mmdebstrap:
     - path-include=/lib/firmware/cypress/cyfmac43455*
     - path-exclude=/lib/firmware/brcm/*
     - path-include=/lib/firmware/brcm/brcmfmac43430-sdio.raspberrypi,3*
-    - path-include=/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3*
     - path-include=/lib/firmware/brcm/brcmfmac43430-sdio.txt
+    - path-include=/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3*
     - path-include=/lib/firmware/brcm/brcmfmac43455-sdio.txt
     - path-include=/lib/firmware/brcm/BCM43430A1.raspberrypi,3*
     - path-include=/lib/firmware/brcm/BCM4345C0.raspberrypi,3*
