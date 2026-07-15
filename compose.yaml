@@ -31,5 +31,62 @@ services:
       - "IGconf_device_user1=${DEVICE_USERNAME:?}"
       - "IGconf_device_user1pass=${DEVICE_PASSWORD:?}"
 
+  # docker compose run -it --rm qemu
+  qemu:
+    build:
+      context: .
+      dockerfile: qemu.Dockerfile
+      args:
+        DEBIAN_VERSION: "trixie"
+    image: rpi-build-qemu:local
+    container_name: rpi-build-qemu
+    privileged: true
+    environment:
+      KERNEL_NAME: "kernel8.img"
+      DTB_NAME: "bcm2710-rpi-3-b.dtb"
+      INITRD_NAME: "initramfs8"
+      IMAGE_NAME: "${IMAGE_NAME:?}"
+    volumes:
+      - work-data:/workspace:ro
+    stdin_open: true
+    tty: true
+
+  qemux:
+    image: qemux/qemu-arm:7.35
+    container_name: qemu
+    # privileged: true
+    # ports:
+    #   - mode: ingress
+    #     target: 22
+    #     published: "2222"
+    #     protocol: tcp
+    # devices:
+    #   - source: /dev/kvm
+    #     target: /dev/kvm
+    #     permissions: rwm
+    #   - source: /dev/net/tun
+    #     target: /dev/net/tun
+    #     permissions: rwm
+    cap_add:
+      - NET_ADMIN
+    environment:
+      MACHINE: "raspi3b"
+      USER_PORTS: "22"
+      RAM_SIZE: "1G"
+      CPU_CORES: "4"
+      DISK_SIZE: "16G"
+      DEBUG: "Y"
+    volumes:
+      - type: volume
+        source: work-data
+        target: /boot.img
+        volume:
+          subpath: image-rpi3-slim/rpi3-slim.img
+
+    # entrypoint: [ "qemu-system-aarch64" ]
+    # command:
+    #   - "-machine"
+    #   - "help"
+
 volumes:
   work-data:
