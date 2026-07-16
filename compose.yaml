@@ -1,18 +1,17 @@
-# docker-compose.yml
-
 # https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/
 
 services:
-  # docker compose run --rm rpi-image-gen
-  rpi-image-gen:
+  # docker compose build --no-cache image-gen
+  # docker compose run --rm image-gen
+  image-gen:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/image-gen.Dockerfile
       args:
-        DEBIAN_VERSION: "trixie"
-        RPI_IMAGE_GEN_VERSION: "master"
+        DEBIAN_VERSION: ${DOCKER_DEBIAN_VERSION:-trixie}
+        RPI_IMAGE_GEN_VERSION: ${DOCKER_RPI_IMAGE_GEN_VERSION:-master}
     image: rpi-image-gen:local
-    container_name: rpi-image-gen
+    container_name: image-gen
     privileged: true
     volumes:
       - ./target/${TARGET_FOLDER:?}:/workspace/build:ro
@@ -22,7 +21,7 @@ services:
       - "-S"
       - "./build"
       - "-c"
-      - "./build/config/${CONFIG_FILE:?}"
+      - "./build/config/${TARGET_CONFIG:?}"
       - "-I"
       - "--"
       # Required
