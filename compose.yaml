@@ -22,7 +22,9 @@ services:
       - "./build"
       - "-c"
       - "./build/config/${TARGET_CONFIG:?}"
-      - "-I"
+      - "-B"
+      - "/workspace/work"
+      - "${EXTRA_ARGS:-}"
       - "--"
       # Required
       - "IGconf_image_name=${IMAGE_NAME:?}"
