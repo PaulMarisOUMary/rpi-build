@@ -5,13 +5,8 @@ include:
 
 # https://raspberrypi.github.io/rpi-image-gen/layer/target-config.html
 target:
-  context: rpi3-slim
-
+  context: rpi3-slim-test
+ 
 # https://raspberrypi.github.io/rpi-image-gen/layer/artefact-base.html
-artefact: {}
-
-# https://raspberrypi.github.io/rpi-image-gen/layer/image-base.html
-image:
-  layer: rpi3-slim-image
-  name: rpi3-slim-${IGconf_image_version}
-  compression: zstd
+artefact:
+  target_name: rpi3-slim-test.tgz

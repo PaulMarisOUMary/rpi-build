@@ -1,0 +1,28 @@
+# https://raspberrypi.github.io/rpi-image-gen/layer/device-base.html
+device:
+  layer: rpi3-slim-device
+  hostname: slim
+  user1: pi
+  user1pass: ChangeMe123!
+  user1sudo: passwd
+
+# https://raspberrypi.github.io/rpi-image-gen/layer/deploy-base.html
+deploy: {}
+
+# https://raspberrypi.github.io/rpi-image-gen/layer/bluez.html
+# bluez: {}
+
+# https://raspberrypi.github.io/rpi-image-gen/layer/iwd.html
+wifi: {}
+
+# https://raspberrypi.github.io/rpi-image-gen/layer/openssh-server.html
+ssh: {}
+
+# https://raspberrypi.github.io/rpi-image-gen/layer/locale-base.html
+locale: {}
+
+# https://raspberrypi.github.io/rpi-image-gen/layer/wireless-regulatory.html
+ieee80211: {}
+
+layer:
+  customisation: rpi3-slim-customisation
