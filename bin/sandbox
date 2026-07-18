@@ -1,0 +1,168 @@
+#!/bin/sh
+# shellcheck shell=sh
+#
+# Interactive testing of image-gen build output, via podman.
+
+set -eu
+
+. /usr/local/lib/sandbox.sh
+
+usage() {
+    cat >&2 <<USAGE
+Usage: docker compose run --rm sandbox <command> [args]
+
+  import [--tgz|--dir] [tag]
+                    import the build output as a podman image.
+                    --tgz (default): native .tgz (config/*-test.yaml, no
+                      image layer, see examples/container_chroot)
+                    --dir: filesystem/ directory from a plain -f build,
+                      tarred on the fly
+                    auto tag if omitted: <target>:<artefact-mtime>
+  run [tag]         shell in that image, no network, container removed on exit
+  run-net [tag]     same as run, with network
+  list              show images for this target
+  rm <tag>          remove one image
+  prune [keep-n]    remove all but the <keep-n> most recent images
+                    (default: 3)
+
+[tag] defaults to the most recently imported image when omitted, except
+for 'import' (which always creates a new one).
+USAGE
+}
+
+cmd_import() {
+    mode="tgz"
+    requested_tag=""
+    for arg in "$@"; do
+        case "$arg" in
+            --tgz) mode="tgz" ;;
+            --dir) mode="dir" ;;
+            *) requested_tag="$arg" ;;
+        esac
+    done
+
+    found=$(detect_artifact "$mode")
+    kind=${found%%:*}
+    src=${found#*:}
+
+    if [ "$kind" = "tgz" ]; then
+        artifact="$src"
+        size=$(du -h "$artifact" | cut -f1)
+        mtime_epoch=$(date -r "$artifact" +%s)
+    else
+        log "Packing directory: $src"
+        artifact=$(mktemp --suffix .tgz)
+        trap 'rm -f "$artifact"' EXIT
+        tar -C "$src" -cf "$artifact" .
+        size=$(du -h "$artifact" | cut -f1)
+        mtime_epoch=$(date -r "$src" +%s)
+    fi
+
+    mtime=$(date -d "@${mtime_epoch}" '+%Y-%m-%d %H:%M:%S' 2>/dev/null || date -r "$mtime_epoch" '+%Y-%m-%d %H:%M:%S')
+    log "Size: ${size}, built: ${mtime}"
+
+    tag="${requested_tag:-$(auto_tag_for_artifact "$src")}"
+
+    if image_exists "$tag"; then
+        die "image $tag already exists. Pick an explicit, different tag, or 'rm $tag' first if you meant to replace it."
+    fi
+
+    log "Importing as ${tag} ..."
+    podman import \
+        --change "LABEL io.rpi-image-gen.target=${SANDBOX_IMAGE_NAME}" \
+        --change "LABEL io.rpi-image-gen.source-kind=${kind}" \
+        --change "LABEL io.rpi-image-gen.source-artifact=$(basename "$src")" \
+        --change "LABEL org.opencontainers.image.created=$(date -u -d "@${mtime_epoch}" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -r "$mtime_epoch" +%Y-%m-%dT%H:%M:%SZ)" \
+        "$artifact" "$tag" >/dev/null
+
+    log "Done: ${tag}"
+    log "Run it with:  docker compose run --rm sandbox run ${tag}"
+}
+
+_resolve_tag_or_latest() {
+    tag="${1:-}"
+    if [ -z "$tag" ]; then
+        tag=$(latest_image_tag)
+        [ -n "$tag" ] || die "no image found for target '${SANDBOX_IMAGE_NAME}'. Run 'import' first."
+        log "No tag given, using most recent: ${tag}"
+    fi
+    if ! image_exists "$tag"; then
+        die "image '${tag}' not found. Available:
+$(list_image_tags | sed 's/^/  - /')"
+    fi
+    printf '%s\n' "$tag"
+}
+
+_run_container() {
+    net_args="$1"
+    tag=$(_resolve_tag_or_latest "${2:-}")
+    name=$(container_name_for_tag "$tag")
+
+    log "Starting ${tag} (removed on exit) ..."
+    # shellcheck disable=SC2086
+    exec podman run -it --rm --name "$name" $net_args "$tag" /bin/bash
+}
+
+cmd_run()     { _run_container "--network=none" "${1:-}"; }
+cmd_run_net() { _run_container "" "${1:-}"; }
+
+cmd_list() {
+    log "Images (${SANDBOX_IMAGE_NAME}):"
+    tags=$(list_image_tags)
+    if [ -z "$tags" ]; then
+        log "  (none - run 'import' first)"
+    else
+        printf '%s\n' "$tags" | while read -r t; do log "  ${t}"; done
+    fi
+}
+
+cmd_rm() {
+    tag="${1:?Usage: rm <tag> (see 'list' for available tags)}"
+    name=$(container_name_for_tag "$tag")
+
+    podman rm -f "$name" >/dev/null 2>&1 || true
+    if image_exists "$tag"; then
+        podman rmi -f "$tag" >/dev/null
+        log "Removed image: ${tag}"
+    else
+        log "(no image found for ${tag})"
+    fi
+}
+
+cmd_prune() {
+    keep="${1:-3}"
+    all_tags=$(list_image_tags)
+    total=$(printf '%s\n' "$all_tags" | grep -c . || true)
+
+    if [ "$total" -le "$keep" ]; then
+        log "Nothing to prune: ${total} image(s) for ${SANDBOX_IMAGE_NAME}, keeping up to ${keep}."
+        return
+    fi
+
+    to_remove=$(printf '%s\n' "$all_tags" | tail -n "+$((keep + 1))")
+    log "Keeping the ${keep} most recent, removing $(printf '%s\n' "$to_remove" | grep -c .):"
+    printf '%s\n' "$to_remove" | while read -r tag; do
+        [ -n "$tag" ] || continue
+        log "  - ${tag}"
+        cmd_rm "$tag" >/dev/null 2>&1 || true
+    done
+    log "Done."
+}
+
+main() {
+    cmd="${1:-help}"
+    [ $# -gt 0 ] && shift
+
+    case "$cmd" in
+        import)   cmd_import "$@" ;;
+        run)      cmd_run "${1:-}" ;;
+        run-net)  cmd_run_net "${1:-}" ;;
+        list)     cmd_list ;;
+        rm)       cmd_rm "${1:-}" ;;
+        prune)    cmd_prune "${1:-}" ;;
+        help|-h|--help) usage; exit 0 ;;
+        *) log "ERROR: unknown command: $cmd"; usage; exit 1 ;;
+    esac
+}
+
+main "$@"

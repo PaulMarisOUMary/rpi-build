@@ -32,5 +32,28 @@ services:
       IGconf_device_user1=${DEVICE_USERNAME:?}
       IGconf_device_user1pass=${DEVICE_PASSWORD:?}
 
+  # docker compose build --no-cache sandbox
+  # docker compose run --rm sandbox import
+  # docker compose run --rm sandbox run
+  sandbox:
+    build:
+      context: .
+      dockerfile: docker/sandbox.Dockerfile
+      args: *args-common
+    image: rpi-sandbox:local
+    container_name: sandbox
+    privileged: true
+    environment:
+      SANDBOX_ARTIFACT_CONTEXT: ${SANDBOX_ARTIFACT_CONTEXT:?}
+      SANDBOX_ARTIFACT_NAME: ${SANDBOX_ARTIFACT_NAME:?}
+      SANDBOX_IMAGE_NAME: ${SANDBOX_IMAGE_NAME:-${SANDBOX_ARTIFACT_CONTEXT}}
+      SANDBOX_DIR_CONTEXT: ${SANDBOX_DIR_CONTEXT:-}
+    volumes:
+      - build-workspace:/workspace:ro
+      - sandbox-storage:/var/lib/containers:rw
+    stdin_open: true
+    tty: true
+
 volumes:
   build-workspace:
+  sandbox-storage:
