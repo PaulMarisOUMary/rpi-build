@@ -1,5 +1,9 @@
 # https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/
 
+x-common:
+  args: &args-common
+    DEBIAN_VERSION: ${DOCKER_DEBIAN_VERSION:-trixie}
+
 services:
   # docker compose build --no-cache image-gen
   # docker compose run --rm image-gen
@@ -8,29 +12,25 @@ services:
       context: .
       dockerfile: docker/image-gen.Dockerfile
       args:
-        DEBIAN_VERSION: ${DOCKER_DEBIAN_VERSION:-trixie}
+        <<: *args-common
         RPI_IMAGE_GEN_VERSION: ${DOCKER_RPI_IMAGE_GEN_VERSION:-master}
     image: rpi-image-gen:local
     container_name: image-gen
     privileged: true
     volumes:
       - ./target/${TARGET_FOLDER:?}:/workspace/build:ro
-      - work-data:/workspace/work:rw
-    command:
-      - "build"
-      - "-S"
-      - "./build"
-      - "-c"
-      - "./build/config/${TARGET_CONFIG:?}"
-      - "-B"
-      - "/workspace/work"
-      - "${EXTRA_ARGS:-}"
-      - "--"
-      # Required
-      - "IGconf_image_name=${IMAGE_NAME:?}"
-      - "IGconf_device_hostname=${DEVICE_HOSTNAME:?}"
-      - "IGconf_device_user1=${DEVICE_USERNAME:?}"
-      - "IGconf_device_user1pass=${DEVICE_PASSWORD:?}"
+      - build-workspace:/workspace/work:rw
+    command: >-
+      build
+      -S ./build
+      -c ./build/config/${TARGET_CONFIG:?}
+      -B /workspace/work
+      ${EXTRA_ARGS:-}
+      --
+      IGconf_image_name=${IMAGE_NAME:?}
+      IGconf_device_hostname=${DEVICE_HOSTNAME:?}
+      IGconf_device_user1=${DEVICE_USERNAME:?}
+      IGconf_device_user1pass=${DEVICE_PASSWORD:?}
 
 volumes:
-  work-data:
+  build-workspace:
