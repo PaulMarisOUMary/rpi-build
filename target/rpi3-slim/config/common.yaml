@@ -25,4 +25,7 @@ locale: {}
 ieee80211: {}
 
 layer:
+  anchors: rpi3-slim-anchors
+  iwd: rpi3-slim-iwd
+  connectivity: rpi3-slim-connectivity
   customisation: rpi3-slim-customisation

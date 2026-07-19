@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+template="$1"; passphrase="$2";
+
+esc=$(printf '%s' "$passphrase" | sed 's/[&|\\]/\\&/g')
+sed "s|\$PASSPHRASE|$esc|" "$template"

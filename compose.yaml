@@ -27,10 +27,12 @@ services:
       -B /workspace/work
       ${EXTRA_ARGS:-}
       --
-      IGconf_image_name=${IMAGE_NAME:?}
-      IGconf_device_hostname=${DEVICE_HOSTNAME:?}
-      IGconf_device_user1=${DEVICE_USERNAME:?}
-      IGconf_device_user1pass=${DEVICE_PASSWORD:?}
+      IGconf_image_name="${IMAGE_NAME:?}"
+      IGconf_device_hostname="${DEVICE_HOSTNAME:?}"
+      IGconf_device_user1="${DEVICE_USERNAME:?}"
+      IGconf_device_user1pass="${DEVICE_PASSWORD:?}"
+      IGconf_iwd_ssid="${WIFI_SSID:-}"
+      IGconf_iwd_passphrase="${WIFI_PASSPHRASE:-}"
 
   # docker compose build --no-cache sandbox
   # docker compose run --rm sandbox import

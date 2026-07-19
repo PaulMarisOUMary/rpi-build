@@ -1,0 +1,15 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-anchors
+# X-Env-Layer-Category: general
+# X-Env-Layer-Desc: Declares project-wide anchors shared by our layers
+# X-Env-Layer-Version: 1.0.0
+#
+# X-Env-VarPrefix: project
+#
+# X-Env-Var-hookroot: ${@SRCROOT}/hook
+# X-Env-Var-hookroot-Desc: Root directory of hooks for this project
+# X-Env-Var-hookroot-Anchor: @HOOKROOT
+# X-Env-Var-hookroot-Valid: dir
+# X-Env-Var-hookroot-Set: y
+# X-Env-Var-hookroot-Required: n
+# METAEND

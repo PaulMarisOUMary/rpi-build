@@ -1,0 +1,41 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-iwd
+# X-Env-Layer-Category: connectivity
+# X-Env-Layer-Desc: Extended copy of upstream iwd-systemd layer
+# X-Env-Layer-Version: 1.1.0
+# X-Env-Layer-Provides: wifi-supplicant
+# X-Env-Layer-RequiresProvider: wireless-regdb,systemd,network-activator
+# X-Env-Layer-Requires: rpi3-slim-anchors
+#
+# X-Env-VarPrefix: iwd
+#
+# X-Env-Var-ssid:
+# X-Env-Var-ssid-Desc: Wi-Fi SSID to pre-configure. Leave unset to skip
+#  Wi-Fi provisioning entirely (iwd stays installed, no profile baked).
+# X-Env-Var-ssid-Required: n
+# X-Env-Var-ssid-Valid: string-or-empty
+# X-Env-Var-ssid-Set: y
+#
+# X-Env-Var-passphrase:
+# X-Env-Var-passphrase-Desc: WPA passphrase, plain text. Required if
+#  ssid is set. Prefer a CLI override over committing it to a config file.
+# X-Env-Var-passphrase-Required: n
+# X-Env-Var-passphrase-Valid: string-or-empty
+# X-Env-Var-passphrase-Set: y
+#
+# METAEND
+---
+mmdebstrap:
+  packages:
+    - iwd
+  customize-hooks:
+    - $BDEBSTRAP_HOOKS/enable-units "$1" iwd
+    - install -d -m 0700 "$1/var/lib/iwd"
+    - install -d -m 0755 "$1/etc/iwd"
+    - |-
+      set -eu
+      if [ -n "${IGconf_iwd_ssid:-}" ]; then
+        dest="$1/var/lib/iwd/${IGconf_iwd_ssid}.psk"
+        "${IGconf_project_hookroot}/iwd/gen-psk" "${IGconf_project_hookroot}/iwd/template.psk" "${IGconf_iwd_passphrase}" > "$dest"
+        chmod 0600 "$dest"
+      fi

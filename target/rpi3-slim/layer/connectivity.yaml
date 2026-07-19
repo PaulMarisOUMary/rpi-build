@@ -1,0 +1,11 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-connectivity
+# X-Env-Layer-Version: 1.0.0
+# X-Env-Layer-Category: suite
+# X-Env-Layer-Desc: Connectivity layer
+# X-Env-Layer-Requires: wireless-regulatory,
+#  openssh-server,
+# METAEND
+---
+# https://raspberrypi.github.io/rpi-image-gen/layer/iwd.html
+# https://raspberrypi.github.io/rpi-image-gen/layer/openssh-server.html
