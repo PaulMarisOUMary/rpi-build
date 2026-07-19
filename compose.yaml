@@ -56,7 +56,7 @@ services:
     stdin_open: true
     tty: true
 
-  # docker compose run --rm export deploy-20XX-XX-XX/rpi3-slim-20XX-XX-XX.tar.zst
+  # docker compose run --rm export image-rpi3-slim/rpi3-slim.img
   export:
     image: debian:${DOCKER_DEBIAN_VERSION:-trixie}-slim
     container_name: export

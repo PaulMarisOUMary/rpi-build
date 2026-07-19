@@ -10,15 +10,13 @@
 # X-Env-VarPrefix: iwd
 #
 # X-Env-Var-ssid:
-# X-Env-Var-ssid-Desc: Wi-Fi SSID to pre-configure. Leave unset to skip
-#  Wi-Fi provisioning entirely (iwd stays installed, no profile baked).
+# X-Env-Var-ssid-Desc: WiFi SSID to pre-configure, leave unset to skip
 # X-Env-Var-ssid-Required: n
 # X-Env-Var-ssid-Valid: string-or-empty
 # X-Env-Var-ssid-Set: y
 #
 # X-Env-Var-passphrase:
-# X-Env-Var-passphrase-Desc: WPA passphrase, plain text. Required if
-#  ssid is set. Prefer a CLI override over committing it to a config file.
+# X-Env-Var-passphrase-Desc: WPA passphrase, plain text, required if SSID is set
 # X-Env-Var-passphrase-Required: n
 # X-Env-Var-passphrase-Valid: string-or-empty
 # X-Env-Var-passphrase-Set: y
