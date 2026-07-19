@@ -26,8 +26,8 @@ mmdebstrap:
     - linux-image-rpi-v8
     - firmware-brcm80211
   dpkgopts:
-    - path-exclude=/usr/lib/raspi-firmware/*
-    - path-include=/usr/lib/raspi-firmware/LICENCE.broadcom
+    - path-exclude=/usr/share/doc/raspi-firmware/
+    - path-include=/usr/share/doc/raspi-firmware/copyright
     - path-exclude=/usr/lib/linux-image-*-v8/broadcom/bcm2711*
     - path-exclude=/usr/lib/linux-image-*-v8/broadcom/bcm2712*
     - path-exclude=/usr/share/doc/firmware-brcm80211/
