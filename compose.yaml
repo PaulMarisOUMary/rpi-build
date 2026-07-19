@@ -56,6 +56,29 @@ services:
     stdin_open: true
     tty: true
 
+  # docker compose run --rm export deploy-20XX-XX-XX/rpi3-slim-20XX-XX-XX.tar.zst
+  export:
+    image: debian:${DOCKER_DEBIAN_VERSION:-trixie}-slim
+    container_name: export
+    volumes:
+      - build-workspace:/workspace/work:ro
+      - ./output:/out:rw
+    entrypoint:
+      - sh
+      - -c
+      - |
+        set -eu
+        src="/workspace/work/$$1"
+        [ -f "$$src" ] || { 
+          echo "Not found: $$src" >&2
+          echo "Contents of $$(dirname "$$src"):" >&2
+          ls -la "$$(dirname "$$src")" >&2
+          exit 1
+        }
+        mkdir -p /out
+        cp -v "$$src" /out/
+      - sh
+
 volumes:
   build-workspace:
   sandbox-storage:
