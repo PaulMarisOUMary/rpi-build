@@ -33,6 +33,7 @@ services:
       IGconf_device_user1pass="${DEVICE_PASSWORD:?}"
       IGconf_iwd_ssid="${WIFI_SSID:-}"
       IGconf_iwd_passphrase="${WIFI_PASSPHRASE:-}"
+      IGconf_ieee80211_regdom="${WIFI_REGDOM:-}"
 
   # docker compose build --no-cache sandbox
   # docker compose run --rm sandbox import

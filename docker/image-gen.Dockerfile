@@ -5,6 +5,8 @@ ARG DEBIAN_VERSION=trixie
 FROM debian:${DEBIAN_VERSION}-slim
 
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get -q -y --no-install-recommends install \
     ca-certificates \
     binfmt-support \
