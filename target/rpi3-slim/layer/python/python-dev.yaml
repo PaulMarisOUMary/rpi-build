@@ -1,0 +1,11 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-python-dev
+# X-Env-Layer-Category: runtime
+# X-Env-Layer-Desc: Headers to compile Python C extensions from source.
+# X-Env-Layer-Version: 1.0.0
+# X-Env-Layer-Requires: rpi3-slim-python
+# METAEND
+---
+mmdebstrap:
+  packages:
+    - python3-dev

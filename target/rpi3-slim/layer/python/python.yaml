@@ -1,0 +1,11 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-python
+# X-Env-Layer-Category: runtime
+# X-Env-Layer-Desc: Minimal Python 3 interpreter and standard library.
+#  No pip/venv/headers, see rpi3-slim-python-pip / -dev for those.
+# X-Env-Layer-Version: 1.0.0
+# METAEND
+---
+mmdebstrap:
+  packages:
+    - python3

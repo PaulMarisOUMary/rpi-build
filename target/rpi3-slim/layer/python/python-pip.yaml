@@ -1,0 +1,12 @@
+# METABEGIN
+# X-Env-Layer-Name: rpi3-slim-python-pip
+# X-Env-Layer-Category: runtime
+# X-Env-Layer-Desc: pip + venv for the Python interpreter.
+# X-Env-Layer-Version: 1.0.0
+# X-Env-Layer-Requires: rpi3-slim-python
+# METAEND
+---
+mmdebstrap:
+  packages:
+    - python3-pip
+    - python3-venv

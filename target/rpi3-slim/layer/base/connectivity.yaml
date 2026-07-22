@@ -4,7 +4,9 @@
 # X-Env-Layer-Category: suite
 # X-Env-Layer-Desc: Connectivity layer
 # X-Env-Layer-Requires: wireless-regulatory,
+#  locale-gen,
 #  openssh-server,
+#  rpi-misc-utils,
 # METAEND
 ---
 # https://raspberrypi.github.io/rpi-image-gen/layer/iwd.html
