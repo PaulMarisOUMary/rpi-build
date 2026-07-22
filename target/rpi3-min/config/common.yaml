@@ -1,0 +1,19 @@
+device:
+  layer: rpi3
+  hostname: min
+  user1: pi
+  user1pass: ChangeMe123!
+  user1sudo: passwd
+
+deploy: {}
+
+locale:
+  default: fr_FR.UTF-8
+  timezone: Europe/Paris
+  keyboard_keymap: fr
+  keyboard_layout: French
+
+layer:
+  base: trixie-minbase
+  rpiboot: rpi-boot-firmware
+  localegen: locale-gen

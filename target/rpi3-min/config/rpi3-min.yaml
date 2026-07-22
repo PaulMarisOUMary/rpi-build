@@ -1,0 +1,15 @@
+include:
+  file: common.yaml
+
+target:
+  context: rpi3-min
+
+artefact: {}
+
+image:
+  layer: image-rpios
+  name: rpi3-min
+  rootfs_type: ext4
+  boot_part_size: 200%
+  root_part_size: 300%
+  compression: zstd

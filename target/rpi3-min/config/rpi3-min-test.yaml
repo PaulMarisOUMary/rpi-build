@@ -1,0 +1,8 @@
+include:
+  file: common.yaml
+
+target:
+  context: rpi3-min-test
+
+artefact:
+  target_name: rpi3-min-test.tgz
